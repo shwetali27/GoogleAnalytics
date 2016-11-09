@@ -26,9 +26,9 @@ public class GaReportResponseFetcher {
 		// creating object of ResponseModel
 		ResponseModel responseModelObject = new ResponseModel();
 
-		// calling initializeAnalyticsReporting method of
-		// InitializeAnalyticsReporting class to initialize all credential
 		try {
+			// calling initializeAnalyticsReporting method of
+			// InitializeAnalyticsReporting class to initialize all credential
 			AnalyticsReporting service = initializeAnalyticsReportingObject.initializeAnalyticsReporting();
 
 			// calling getReport method to get response

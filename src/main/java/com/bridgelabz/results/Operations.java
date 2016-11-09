@@ -39,7 +39,6 @@ public class Operations {
 
 		for (String key : keys) {
 			//System.out.println("\nKey = " + key);
-			// System.out.println("Values = " + multiMapId.keys() + "n");
 
 			// System.out.println("Values = " + multiMapDate.get(key) + "n");
 			bw.write("Android Id: " + key + "\n");

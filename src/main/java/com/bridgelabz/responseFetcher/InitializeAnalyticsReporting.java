@@ -55,6 +55,7 @@ public class InitializeAnalyticsReporting {
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
 				.setServiceAccountPrivateKeyFromP12File(new File(KEY_FILE_LOCATION))
 				.setServiceAccountScopes(AnalyticsReportingScopes.all()).build();
+		
 		// getting access token
 		String refreshToken = null;
 		credential.setRefreshToken(refreshToken);
@@ -75,12 +76,13 @@ public class InitializeAnalyticsReporting {
 		ArrayList<String> metricArrayList = new ArrayList<String>();
 		ArrayList<String> dimensionArrayList = new ArrayList<String>();
 		ArrayList<String> dimensionFilterArrayList = new ArrayList<String>();
+		
 		// Creating the DateRange object.
 		DateRange dateRange = new DateRange();
 		dateRange.setStartDate(startDate);
 		dateRange.setEndDate(endDate);
 
-		// getting metricarry from model class
+		// getting metricArray from model class
 		metricArrayList = gaReportInputModel.getmMetricArraList();
 		// creating object of metric ArrayList
 		ArrayList<Metric> metriclist = new ArrayList<Metric>();
@@ -92,7 +94,7 @@ public class InitializeAnalyticsReporting {
 			metriclist.add(metric3.setExpression((String) metricArrayList.get(j)));
 		}
 
-		// getting dimensionarray from model class
+		// getting dimensionArray from model class
 		dimensionArrayList = gaReportInputModel.getmDimensionArraList();
 		Dimension dimens;
 		// Creating the Dimensions ArrayList.
@@ -106,7 +108,7 @@ public class InitializeAnalyticsReporting {
 		}
 		
 		
-		// getting dimenstionfilter from model class
+		// getting dimenstionFilter from model class
 		dimensionFilterArrayList = gaReportInputModel.getmDimensionFilterArraList();
 		// creating object of DimensionFilter arrayList
 		ArrayList<DimensionFilter> dimensfilterList = new ArrayList<DimensionFilter>();
@@ -117,19 +119,17 @@ public class InitializeAnalyticsReporting {
 				DimensionFilter dimensionFilter = new DimensionFilter();
 				// taking DimensionFilter and converting into String
 				String dimensionfilter = (String) dimensionFilterArrayList.get(k);
-				String s = "==";
-				String s1 = "=@:";
-				// checking whether inside DimensionFilter exact or partial
-				// operator
-				// Available
-				if (dimensionfilter.contains(s)) {
+				
+				// checking whether exact/partial operator inside DimensionFilter
+				
+				if (dimensionfilter.contains("==")) {
 					// Splitting the DimensionFilter
 					String[] words = dimensionfilter.split("==");
 					// adding into dimensfilterList after setting the parameter
 					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("EXACT")
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("equals");
-				} else if (dimensionfilter.contains(s1))
+				} else if (dimensionfilter.contains("=@:"))
 
 				{
 					String[] words = dimensionfilter.split("=@:");
