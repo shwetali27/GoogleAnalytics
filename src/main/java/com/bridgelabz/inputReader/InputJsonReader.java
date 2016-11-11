@@ -17,13 +17,13 @@ public class InputJsonReader {
 	public ArrayList<GaReportInputModel> readInputJsonFile(String jsonFilePath){
 		try{
 
-			JSONParser parser = new JSONParser();
+			JSONParser parser = new JSONParser();//json parser is used to read json files
 			// parsing and casting to Object
 			Object obj = parser.parse(new FileReader(jsonFilePath));
 			// casting object into JSONObject
-			JSONObject jsonObject = (JSONObject) obj;
+			JSONObject jsonObject = (JSONObject) obj;//creating json object
 
-			// setting value in secretFileModelObject
+			// setting static values in secretFileModelObject
 			SecretFileModel.setStartDate((String) jsonObject.get("startDate"));
 
 			SecretFileModel.setEndDate((String) jsonObject.get("endDate"));

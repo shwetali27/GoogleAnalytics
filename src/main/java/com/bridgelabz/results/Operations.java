@@ -22,7 +22,7 @@ public class Operations {
 
 		// String filePath = SecretFileModel.getCsvFilePath();
 		String filePath = "/home/bridgeit/Music/AndroidId/";
-		System.out.println("Filepath is: " + filePath);
+		
 		File file = new File(filePath + "AndroidOperations.txt");
 		if (file.exists())
 			file.delete();

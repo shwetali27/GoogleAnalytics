@@ -16,12 +16,10 @@ public class GaReportResponseFetcher {
 	// creating object of ResponseReader
 	ResponseReader responseReaderObject = new ResponseReader();
 
+	//default constructor
+	public GaReportResponseFetcher() {}
+	
 	/*-------------------------method to get the response model ArrayList------------------------------------*/
-
-	public GaReportResponseFetcher() {
-		
-	}
-
 	public ResponseModel getResponse(GaReportInputModel gaReportInputModel) {
 		// creating object of ResponseModel
 		ResponseModel responseModelObject = new ResponseModel();
@@ -33,17 +31,11 @@ public class GaReportResponseFetcher {
 
 			// calling getReport method to get response
 			GetReportsResponse response = initializeAnalyticsReportingObject.getReport(service, gaReportInputModel);
-			/*-----------------method to write the response into the text file-------------------------*/
 			
 			System.out.println(response);
 
-			// assigning response into variable response JSON of
-			// GetReportsResponse type
-
-			GetReportsResponse responsejson = response;
-
 			// reading response and placing it to responseModelArrayList
-			responseModelObject = responseReaderObject.responseReader(responsejson.toString());
+			responseModelObject = responseReaderObject.responseReader(response.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 

@@ -63,6 +63,7 @@ public class InitializeAnalyticsReporting {
 		if (!credential.refreshToken()) {
 			throw new RuntimeException("Failed OAuth to refresh the token");
 		}
+		
 		// Construct the Analytics Reporting service object.
 		return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
 				.setApplicationName(APPLICATION_NAME).build();
@@ -89,9 +90,9 @@ public class InitializeAnalyticsReporting {
 		metriclist.clear();
 		for (int j = 0; j < metricArrayList.size(); j++) {
 			// Creating the Metrics object.
-			Metric metric3 = new Metric();
+			Metric metric = new Metric();
 			// adding metric into metric ArrayList
-			metriclist.add(metric3.setExpression((String) metricArrayList.get(j)));
+			metriclist.add(metric.setExpression((String) metricArrayList.get(j)));
 		}
 
 		// getting dimensionArray from model class
@@ -113,31 +114,32 @@ public class InitializeAnalyticsReporting {
 		// creating object of DimensionFilter arrayList
 		ArrayList<DimensionFilter> dimensfilterList = new ArrayList<DimensionFilter>();
 		dimensfilterList.clear();
+		
 		if (dimensionFilterArrayList.size() >= 1) {
 			for (int k = 0; k < dimensionFilterArrayList.size(); k++) {
 				// created DimensionFilter object
 				DimensionFilter dimensionFilter = new DimensionFilter();
 				// taking DimensionFilter and converting into String
-				String dimensionfilter = (String) dimensionFilterArrayList.get(k);
+				String dimensionfilterString = (String) dimensionFilterArrayList.get(k);
 				
 				// checking whether exact/partial operator inside DimensionFilter
 				
-				if (dimensionfilter.contains("==")) {
+				if (dimensionfilterString.contains("==")) {
 					// Splitting the DimensionFilter
-					String[] words = dimensionfilter.split("==");
+					String[] words = dimensionfilterString.split("==");
 					// adding into dimensfilterList after setting the parameter
 					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("EXACT")
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("equals");
-				} else if (dimensionfilter.contains("=@:"))
+				} else if (dimensionfilterString.contains("=@:"))
 
 				{
-					String[] words = dimensionfilter.split("=@:");
+					String[] words = dimensionfilterString.split("=@:");
 					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("PARTIAL")
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("at the rate");
 				} else {
-					String[] words = dimensionfilter.split("=@");
+					String[] words = dimensionfilterString.split("=@");
 					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("PARTIAL")
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("at the rate");
@@ -161,7 +163,7 @@ public class InitializeAnalyticsReporting {
 				.setMetrics(metriclist)
 				.setDimensions(dimensList);
 		
-		// if dimensionfilter is available then only set it
+		// if dimensionFilter is available then only set it
 		if (dimensionFilterArrayList.size() >= 1) {
 			request.setDimensionFilterClauses(dmfilterclauselist);
 		}

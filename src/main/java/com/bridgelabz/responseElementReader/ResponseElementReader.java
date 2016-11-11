@@ -25,12 +25,11 @@ public class ResponseElementReader {
 	// dimensionHashMapArrayList
 	ArrayList<HashMap<String, String>> dimensionHashMapArrayList = new ArrayList<HashMap<String, String>>();
 	ArrayList<HashMap<String, String>> valueList = new ArrayList<HashMap<String, String>>();
-	/************************/
+
 	Operations operationObject = new Operations();
 	Multimap<String, String> multiMapId = ArrayListMultimap.create();
 	Multimap<String, String> multiMapEvent = ArrayListMultimap.create();
 	Multimap<String, Collection<String>> multiMapvalue = ArrayListMultimap.create();
-	/************************/
 
 	// hash set for app open android id
 	HashSet<String> androidIdAppOpen;
@@ -42,7 +41,7 @@ public class ResponseElementReader {
 		try {
 
 			sum++;
-			System.out.println("Sum, is: "+sum);
+			//System.out.println("Sum, is: " + sum);
 			// creating object of ArrayListAppOpenModel
 			ArrayList<AppOpenModel> appOpenModelArrayListObject = new ArrayList<AppOpenModel>();
 			// creating object of ArrayListReAppOpenModel
@@ -53,25 +52,20 @@ public class ResponseElementReader {
 			boolean appReOpenFlag = false;
 			boolean allElementFlag = false;
 			boolean allElementFlag1 = false;
+
 			// assigning to dimensionHashMapArrayList
 			dimensionHashMapArrayList = responseModelObject.getDimensionHashMapArrayList();
 			valueList = responseModelObject.getMetricHashMapArrayList();
 			//System.out.println("valuelist is is:"+valueList);
-
-			//ArrayList<String> metricHeaderArrayList = new ArrayList<String>();
-			//metricHeaderArrayList = responseModelObject.getmMetricHeaderArrayList();
-			//ArrayList<HashMap<String, String>> metricHashMapArrayList = new ArrayList<HashMap<String, String>>();
-			//metricHashMapArrayList = responseModelObject.getMetricHashMapArrayList();
-
-			/*System.out.println("Metric:: " + metricHeaderArrayList.get(0));
-			System.out.println("Metric hash map value" + metricHashMapArrayList.get(0).get(metricHeaderArrayList.get(0)));*/
 
 			/*-----------------------if response object have null value------------------------*/
 			if (dimensionHashMapArrayList.equals("null")) {
 				AllElementModels allElementModelsObject = new AllElementModels();
 				allElementModelsObject.setmDate("");
 				allElementModelsObject.setmAndroidId(" ");
-			} else {
+			}
+
+			else {
 				for (int i = 0; i < dimensionHashMapArrayList.size(); i++) {
 					// creating object of AppOpenModel
 					AppOpenModel appOpenModelObject = new AppOpenModel();
@@ -139,13 +133,12 @@ public class ResponseElementReader {
 
 							if (m1.getKey().equals("ga:date")) {
 								allElementModelsObject.setmDate(m1.getValue());
-								// System.out.println("date"+allElementModelsObject.getmDate());
 							}
 							if (m1.getKey().equals("ga:dimension1")) {
 								allElementModelsObject.setmAndroidId(m1.getValue());
-								// System.out.println("androidid"+m1.getValue());
+
 							}
-							// System.out.println(allElementModelsObject.toString());
+							
 						}
 
 					}
@@ -158,8 +151,9 @@ public class ResponseElementReader {
 				}
 			}
 
-			// System.out.println(allElementModelArrayListObject.toString());
-			// method to create appOpen CSvfile
+			//System.out.println(allElementModelArrayListObject.toString());
+			
+			//method to get data for app open and putting inside map
 			if (gaReportInputModel.getmGaID().equals("1")) {
 
 				for (int i = 0; i < appOpenModelArrayListObject.size(); i++) {
@@ -171,24 +165,21 @@ public class ResponseElementReader {
 					multiMapvalue.put(appOpenModelArrayListObject.get(i).getmAndroidId(), valueList.get(i).values());
 
 				}
-				/*System.out.println("***************");
-
-				System.out.println("Id is:" + multiMapId.get("70bae0d9d7adde98"));
-				System.out.println("Event is: " + multiMapEvent.get("70bae0d9d7adde98"));
-				System.out.println("Value is: " + multiMapvalue.get("70bae0d9d7adde98"));*/
 
 			}
 
+			//method to get data for app Reopen and putting inside map
 			if (gaReportInputModel.getmGaID().equals("2")) {
 
 				for (int i = 0; i < appReOpenModelArrayListObject.size(); i++) {
 					Set<String> keys = multiMapId.keySet();
-					//System.out.println(keys.size());
+					// System.out.println(keys.size());
 					for (String key : keys) {
 
+						//if particular android id is present inside app open then only add data
 						if (appReOpenModelArrayListObject.get(i).getmAndroidId().equals(key)) {
-							//System.out.println("inside::");
-							//System.out.println(key);
+							// System.out.println("inside::");
+							// System.out.println(key);
 							multiMapId.put(appReOpenModelArrayListObject.get(i).getmAndroidId(),
 									appReOpenModelArrayListObject.get(i).getmDate());
 							multiMapEvent.put(appReOpenModelArrayListObject.get(i).getmAndroidId(),
@@ -199,11 +190,6 @@ public class ResponseElementReader {
 					}
 
 				}
-				/*System.out.println("***************");
-
-				System.out.println("Id is:" + multiMapId.get("c62963490ba85873"));
-				System.out.println("Event is: " + multiMapEvent.get("c62963490ba85873"));
-				System.out.println("Value is: " + multiMapvalue.get("c62963490ba85873"));*/
 
 			}
 			// method to create all other than AppOpen and Reopen
@@ -211,12 +197,12 @@ public class ResponseElementReader {
 
 				for (int i = 0; i < allElementModelArrayListObject.size(); i++) {
 					Set<String> keys = multiMapId.keySet();
-					//System.out.println(keys.size());
+					// System.out.println(keys.size());
 					for (String key : keys) {
-
+						//if particular android id is present inside app open then only add data
 						if (allElementModelArrayListObject.get(i).getmAndroidId().equals(key)) {
-							//System.out.println("inside::");
-							//System.out.println(key);
+							// System.out.println("inside::");
+							// System.out.println(key);
 							multiMapId.put(allElementModelArrayListObject.get(i).getmAndroidId(),
 									allElementModelArrayListObject.get(i).getmDate());
 							multiMapEvent.put(allElementModelArrayListObject.get(i).getmAndroidId(),
@@ -227,10 +213,7 @@ public class ResponseElementReader {
 					}
 
 				}
-				/*System.out.println("Id is:" + multiMapId.get("70bae0d9d7adde98"));
-				System.out.println("Event is: " + multiMapEvent.get("70bae0d9d7adde98"));
-				System.out.println("Value is: " + multiMapvalue.get("70bae0d9d7adde98"));
-				System.out.println(multiMapEvent.get("70bae0d9d7adde98").size());*/
+
 			}
 		} catch (Exception e) {
 			System.out.println("there is 0 rows in response");
@@ -240,9 +223,9 @@ public class ResponseElementReader {
 
 		// System.out.println("size is :" + size);
 		if (sum == size) {
-			operationObject.fileCreation(multiMapId, multiMapEvent,multiMapvalue);
+			operationObject.fileCreation(multiMapId, multiMapEvent, multiMapvalue);
 		}
 
-	}
+	}// end of method
 
 }

@@ -22,6 +22,7 @@ public class GoogleAnalyticReporting {
 		ResponseModel responseModelObject = new ResponseModel();
 		GaReportResponseFetcher gaReportResponseFetcherObject = new GaReportResponseFetcher(); 
 		ResponseElementReader elementReader = new ResponseElementReader();
+		
 		for (int i = 0; i < gaReportInputInfoArrayList.size(); i++) {
 
 			// making ArrayList of responseModel after passing one by one gaReportInputInfoArrayList
@@ -29,6 +30,7 @@ public class GoogleAnalyticReporting {
 			responseModelObject = gaReportResponseFetcherObject
 					.getResponse(gaReportInputInfoArrayList.get(i));
 
+			//reading the response and finding the result
 			elementReader.responseElementReader(responseModelObject,
 					gaReportInputInfoArrayList.get(i),gaReportInputInfoArrayList.size());
 
