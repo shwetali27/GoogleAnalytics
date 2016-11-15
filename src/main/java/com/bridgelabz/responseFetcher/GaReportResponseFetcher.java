@@ -2,13 +2,11 @@ package com.bridgelabz.responseFetcher;
 
 import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.ResponseModel;
-import com.bridgelabz.model.SecretFileModel;
 import com.bridgelabz.responseReader.ResponseReader;
 import com.google.api.services.analyticsreporting.v4.AnalyticsReporting;
 import com.google.api.services.analyticsreporting.v4.model.GetReportsResponse;
 
 public class GaReportResponseFetcher {
-	static String csvFilePath = SecretFileModel.getCsvFilePath();
 
 	// creating object of InitializeAnalyticsReporting
 	InitializeAnalyticsReporting initializeAnalyticsReportingObject = new InitializeAnalyticsReporting();

@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.ResponseModel;
 
 public class ResponseReader {
@@ -25,7 +26,7 @@ public class ResponseReader {
 			JSONObject jsonObject = (JSONObject) obj;
 
 			// covering report array into JSONArray
-			JSONArray reportarray = (JSONArray) jsonObject.get("reports");
+			JSONArray reportarray = (JSONArray) jsonObject.get(ConstantData.reports);
 
 			// reading report JSONArray
 			for (int j = 0; j < reportarray.size(); j++) {
@@ -44,40 +45,42 @@ public class ResponseReader {
 				JSONObject obj3 = (JSONObject) reportarray.get(j);
 
 				// making JSON object of columnHeader
-				JSONObject columnHeaderObject = (JSONObject) obj3.get("columnHeader");
+				JSONObject columnHeaderObject = (JSONObject) obj3.get(ConstantData.columnHeader);
 
 				/*--------------------------------to read metric name type from response------------------------------------*/
-				JSONObject metricHeaderObject = (JSONObject) columnHeaderObject.get("metricHeader");
+				JSONObject metricHeaderObject = (JSONObject) columnHeaderObject.get(ConstantData.metricHeader);
 
-				JSONArray metricheader1 = (JSONArray) metricHeaderObject.get("metricHeaderEntries");
+				JSONArray metricheader1 = (JSONArray) metricHeaderObject.get(ConstantData.metricHeaderEntries);
 
 				for (int l = 0; l < metricheader1.size(); l++) {
 					JSONObject metricElemnt = (JSONObject) metricheader1.get(l);
 					/*System.out.println(metricElemnt);*/
 
 					//getting name of the particular event
-					metricHeaderArrayList.add((String) metricElemnt.get("name"));
+					metricHeaderArrayList.add((String) metricElemnt.get(ConstantData.name));
 					// System.out.println(metricElemnt.get("name"));
 
 				}
 				responseModelObject.setmMetricHeaderArrayList(metricHeaderArrayList);
 				/*--------------------------------to read dimension name type from response------------------------------------*/
 
-				JSONArray dimensionHeaderArrayInput = (JSONArray) columnHeaderObject.get("dimensions");
+				JSONArray dimensionHeaderArrayInput = (JSONArray) columnHeaderObject.get(ConstantData.dimensions);
 
 				for (int k = 0; k < dimensionHeaderArrayInput.size(); k++) {
 
 					columnHeaderArrayList.add((String) dimensionHeaderArrayInput.get(k));
 				}
 				responseModelObject.setmColumnHeaderArrayList(columnHeaderArrayList);
+				
+				//System.out.println(responseModelObject.getmColumnHeaderArrayList());
 				/*-------------------------------------reading row data -----------------------------------------------------------------*/
 				// making JSONObject of data
-				JSONObject dataobject = (JSONObject) obj3.get("data");
+				JSONObject dataobject = (JSONObject) obj3.get(ConstantData.data);
 				// making JSONArray of rows
 
-				JSONArray rowarray = (JSONArray) dataobject.get("rows");
+				JSONArray rowarray = (JSONArray) dataobject.get(ConstantData.rows);
 
-				if ((JSONArray) dataobject.get("rows") == null) {
+				if (rowarray == null) {
 
 					responseModelObject.setDimensionHashMapArrayList(null);
 					responseModelObject.setMetricHashMapArrayList(null);
@@ -94,7 +97,7 @@ public class ResponseReader {
 						JSONObject rowobject = (JSONObject) rowarray.get(i);
 
 						// making metrics JSONArray
-						JSONArray metricarray = (JSONArray) rowobject.get("metrics");
+						JSONArray metricarray = (JSONArray) rowobject.get(ConstantData.metrics);
 						// storing metric JSONArray size into temp2
 
 						// iterating metric JSONArray
@@ -103,7 +106,7 @@ public class ResponseReader {
 							// JSONObject
 							JSONObject metricobject = (JSONObject) metricarray.get(k);
 							// making values JSONArray
-							JSONArray valuesarray = (JSONArray) metricobject.get("values");
+							JSONArray valuesarray = (JSONArray) metricobject.get(ConstantData.values);
 
 							// converting JSONArray into JSONString
 							for (int l1 = 0; l1 < valuesarray.size(); l1++) {
@@ -121,7 +124,7 @@ public class ResponseReader {
 						/*-----------------------------putting element into HashMap-------------------------------------*/
 
 						// casting into dimensions JSONArray
-						JSONArray dimensionsarray = (JSONArray) rowobject.get("dimensions");
+						JSONArray dimensionsarray = (JSONArray) rowobject.get(ConstantData.dimensions);
 						// taking size of dimension array
 
 						for (int l = 0; l < dimensionsarray.size(); l++) {

@@ -13,9 +13,9 @@ public class GoogleAnalyticReporting {
 	public static void main(String[] args) throws IOException{
 		String jsonfilepath = args[0];
 		
-		System.out.println("csvfilepath:"+jsonfilepath);
+		System.out.println("jsonFilepath:"+jsonfilepath);
 		
-		//reading the input json file
+		//reading the input json file and storing inside the list
 		InputJsonReader inputJsonReader = new InputJsonReader();
 		ArrayList<GaReportInputModel> gaReportInputInfoArrayList = inputJsonReader.readInputJsonFile(jsonfilepath);
 	

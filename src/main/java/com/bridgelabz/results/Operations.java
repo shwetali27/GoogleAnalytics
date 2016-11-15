@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.SecretFileModel;
 import com.google.common.collect.Multimap;
 
@@ -21,7 +22,7 @@ public class Operations {
 			Multimap<String, Collection<String>> multiMapvalue) throws IOException {
 
 		// String filePath = SecretFileModel.getCsvFilePath();
-		String filePath = "/home/bridgeit/Music/AndroidId/";
+		String filePath = ConstantData.androidTxtFilepath;
 		
 		File file = new File(filePath + "AndroidOperations.txt");
 		if (file.exists())

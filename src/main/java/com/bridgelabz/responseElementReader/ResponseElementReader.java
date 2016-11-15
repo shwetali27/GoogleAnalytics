@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.AllElementModels;
 import com.bridgelabz.model.AppOpenModel;
 import com.bridgelabz.model.AppReOpenModel;
@@ -21,7 +22,8 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 public class ResponseElementReader {
-
+	
+	//creating the object for classes
 	Summary summaryObject = new Summary();
 	SummaryReportCsv summaryReportCsvObject = new SummaryReportCsv();
 
@@ -65,7 +67,6 @@ public class ResponseElementReader {
 			boolean appOpenFlag = false;
 			boolean appReOpenFlag = false;
 			boolean allElementFlag = false;
-			boolean allElementFlag1 = false;
 
 			// assigning to dimensionHashMapArrayList
 			dimensionHashMapArrayList = responseModelObject.getDimensionHashMapArrayList();
@@ -73,7 +74,7 @@ public class ResponseElementReader {
 			// System.out.println("valuelist is is:"+valueList);
 
 			/*-----------------------if response object have null value------------------------*/
-			if (dimensionHashMapArrayList.equals("null")) {
+			if (dimensionHashMapArrayList.equals(ConstantData.isNull)) {
 				AllElementModels allElementModelsObject = new AllElementModels();
 				allElementModelsObject.setmDate("");
 				allElementModelsObject.setmAndroidId(" ");
@@ -89,78 +90,75 @@ public class ResponseElementReader {
 					AllElementModels allElementModelsObject = new AllElementModels();
 
 					// iterating element of hashmapArrayList
-					for (Entry<String, String> m1 : dimensionHashMapArrayList.get(i).entrySet()) {
+					for (Entry<String, String> dimentionList : dimensionHashMapArrayList.get(i).entrySet()) {
 
 						/*----------------------------------for appOpen-----------------------------------------------------*/
-						if (gaReportInputModel.getmGaID().equals("1")) {
+						if (gaReportInputModel.getmGaID().equals(ConstantData.one)) {
 
-							appReOpenFlag = true;
-							allElementFlag = true;
+							appOpenFlag = true;
 							appOpenModelObject.setmGaId(gaReportInputModel.getmGaID());
 
 							appOpenModelObject.setmGadiscription(gaReportInputModel.getmGaDiscription());
 
-							if (m1.getKey().equals("ga:date")) {
-								appOpenModelObject.setmDate(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.date)) {
+								appOpenModelObject.setmDate(dimentionList.getValue());
 
 							}
-							if (m1.getKey().equals("ga:dimension1")) {
-								appOpenModelObject.setmAndroidId(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.dimension1)) {
+								appOpenModelObject.setmAndroidId(dimentionList.getValue());
 
 							}
-							if (m1.getKey().equals("ga:eventCategory")) {
-								appOpenModelObject.setmEventcategory(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.eventCategory)) {
+								appOpenModelObject.setmEventcategory(dimentionList.getValue());
 
 							}
 
 						}
 						/*----------------------------------for appReOpen------------------------------------------------*/
 
-						if (gaReportInputModel.getmGaID().equals("2")) {
-
-							appOpenFlag = true;
-							allElementFlag1 = true;
+						if (gaReportInputModel.getmGaID().equals(ConstantData.two)) {
+							
+							appReOpenFlag = true;
 							appReOpenModelObject.setmGaId(gaReportInputModel.getmGaID());
 
 							appReOpenModelObject.setmGadiscription(gaReportInputModel.getmGaDiscription());
 
-							if (m1.getKey().equals("ga:date")) {
-								appReOpenModelObject.setmDate(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.date)) {
+								appReOpenModelObject.setmDate(dimentionList.getValue());
 
 							}
-							if (m1.getKey().equals("ga:dimension1")) {
-								appReOpenModelObject.setmAndroidId(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.dimension1)) {
+								appReOpenModelObject.setmAndroidId(dimentionList.getValue());
 
 							}
-							if (m1.getKey().equals("ga:eventCategory")) {
-								appReOpenModelObject.setmEventcategory(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.eventCategory)) {
+								appReOpenModelObject.setmEventcategory(dimentionList.getValue());
 
 							}
 
 						}
 						/*-------------if other than App open and ReOpen------*/
-						if (!gaReportInputModel.getmGaID().equals("1") && !gaReportInputModel.getmGaID().equals("2")) {
-
+						if (!gaReportInputModel.getmGaID().equals(ConstantData.one) && !gaReportInputModel.getmGaID().equals(ConstantData.two)) {
+							allElementFlag = true;
 							allElementModelsObject.setmGaid(gaReportInputModel.getmGaID());
 
 							allElementModelsObject.setmGadiscription(gaReportInputModel.getmGaDiscription());
 
-							if (m1.getKey().equals("ga:date")) {
-								allElementModelsObject.setmDate(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.date)) {
+								allElementModelsObject.setmDate(dimentionList.getValue());
 							}
-							if (m1.getKey().equals("ga:dimension1")) {
-								allElementModelsObject.setmAndroidId(m1.getValue());
+							if (dimentionList.getKey().equals(ConstantData.dimension1)) {
+								allElementModelsObject.setmAndroidId(dimentionList.getValue());
 
 							}
-
 						}
 
 					}
-					if (!appOpenFlag)
+					if (appOpenFlag)
 						appOpenModelArrayListObject.add(appOpenModelObject);
-					if (!appReOpenFlag)
+					if (appReOpenFlag)
 						appReOpenModelArrayListObject.add(appReOpenModelObject);
-					if (!allElementFlag && !allElementFlag1)
+					if (allElementFlag)
 						allElementModelArrayListObject.add(allElementModelsObject);
 				}
 			}
@@ -168,7 +166,7 @@ public class ResponseElementReader {
 			// System.out.println(allElementModelArrayListObject.toString());
 
 			/*----------------------getting data for app Open and putting inside map--------------------*/
-			if (gaReportInputModel.getmGaID().equals("1")) {
+			if (gaReportInputModel.getmGaID().equals(ConstantData.one)) {
 
 				for (int i = 0; i < appOpenModelArrayListObject.size(); i++) {
 					// System.out.println(SecretFileModel.startDate.replace("-",""));
@@ -212,7 +210,7 @@ public class ResponseElementReader {
 			}
 
 			/*----------------------getting data for app Reopen and putting inside map--------------------*/
-			if (gaReportInputModel.getmGaID().equals("2")) {
+			if (gaReportInputModel.getmGaID().equals(ConstantData.two)) {
 
 				for (int i = 0; i < appReOpenModelArrayListObject.size(); i++) {
 					Set<String> keys = multiMapId.keySet();

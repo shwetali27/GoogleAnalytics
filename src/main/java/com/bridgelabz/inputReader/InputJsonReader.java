@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.SecretFileModel;
 
@@ -24,23 +25,23 @@ public class InputJsonReader {
 			JSONObject jsonObject = (JSONObject) obj;//creating json object
 
 			// setting static values in secretFileModelObject
-			SecretFileModel.setStartDate((String) jsonObject.get("startDate"));
+			SecretFileModel.setStartDate((String) jsonObject.get(ConstantData.startDate));
 
-			SecretFileModel.setEndDate((String) jsonObject.get("endDate"));
+			SecretFileModel.setEndDate((String) jsonObject.get(ConstantData.endDate));
 
-			SecretFileModel.setAPPLICATION_NAME((String) jsonObject.get("APPLICATION_NAME"));
+			SecretFileModel.setAPPLICATION_NAME((String) jsonObject.get(ConstantData.APPLICATION_NAME));
 
-			SecretFileModel.setKEY_FILE_LOCATION((String) jsonObject.get("KEY_FILE_LOCATION"));
+			SecretFileModel.setKEY_FILE_LOCATION((String) jsonObject.get(ConstantData.KEY_FILE_LOCATION));
 
-			SecretFileModel.setSERVICE_ACCOUNT_EMAIL((String) jsonObject.get("SERVICE_ACCOUNT_EMAIL"));
+			SecretFileModel.setSERVICE_ACCOUNT_EMAIL((String) jsonObject.get(ConstantData.SERVICE_ACCOUNT_EMAIL));
 
-			SecretFileModel.setVIEW_ID((String) jsonObject.get("VIEW_ID"));
+			SecretFileModel.setVIEW_ID((String) jsonObject.get(ConstantData.VIEW_ID));
 
-			SecretFileModel.setCsvFilePath((String) jsonObject.get("CSVFilePath"));
+			SecretFileModel.setCsvFilePath((String) jsonObject.get(ConstantData.CSVFilePath));
 
 			//System.out.println(SecretFileModel.getCsvFilePath());
 			
-			JSONArray gaReportInfoArray = (JSONArray) jsonObject.get("GAReportInfo");
+			JSONArray gaReportInfoArray = (JSONArray) jsonObject.get(ConstantData.GAReportInfo);
 
 			// reading one by one object
 			for (int i = 0; i < gaReportInfoArray.size(); i++) {
@@ -60,14 +61,14 @@ public class InputJsonReader {
 
 				// setting gaid into model class
 
-				gaReportInputModelObject.setmGaID((String) gaReportInfoObject.get("GAID"));
+				gaReportInputModelObject.setmGaID((String) gaReportInfoObject.get(ConstantData.GAID));
 
 				// setting in model class
 
-				gaReportInputModelObject.setmGaDiscription((String) gaReportInfoObject.get("GAdiscription"));
+				gaReportInputModelObject.setmGaDiscription((String) gaReportInfoObject.get(ConstantData.GAdiscription));
 
 				// making metric array
-				JSONArray metricJSONArray = (JSONArray) gaReportInfoObject.get("metric");
+				JSONArray metricJSONArray = (JSONArray) gaReportInfoObject.get(ConstantData.metric);
 				// reading the metric array
 				for (int k = 0; k < metricJSONArray.size(); k++) {
 					// adding into metric ArrayList
@@ -77,7 +78,7 @@ public class InputJsonReader {
 				gaReportInputModelObject.setmMetricArraList(metricArraList);
 
 				// making dimension JSONArray
-				JSONArray dimensionsJSONArray = (JSONArray) gaReportInfoObject.get("dimension");
+				JSONArray dimensionsJSONArray = (JSONArray) gaReportInfoObject.get(ConstantData.dimension);
 				// reading the dimension array
 				for (int j = 0; j < dimensionsJSONArray.size(); j++) {
 					dimensionArraList.add((String) dimensionsJSONArray.get(j));
@@ -86,7 +87,7 @@ public class InputJsonReader {
 				gaReportInputModelObject.setmDimensionArraList(dimensionArraList);
 
 				// Casting DimensionFilter into JSONArray
-				JSONArray dimensionFilterJSONArray = (JSONArray) gaReportInfoObject.get("dimensionfilter");
+				JSONArray dimensionFilterJSONArray = (JSONArray) gaReportInfoObject.get(ConstantData.dimensionfilter);
 
 				for (int l = 0; l < dimensionFilterJSONArray.size(); l++) {
 					// adding into DimensionFilter ArrayList

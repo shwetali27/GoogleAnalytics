@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.SecretFileModel;
 import com.csvreader.CsvWriter;
 import com.google.common.collect.Multimap;
@@ -15,14 +16,14 @@ public class SummaryReportCsv {
 	int endDate = Integer.parseInt(SecretFileModel.endDate.replace("-", ""));
 	public void csvCreation(ArrayList<String> task,ArrayList<Multimap<Integer, String>> list) {
 
-		String summaryfile = "/home/bridgeit/Music/AndroidId/SummaryReport.csv";
+		String summaryfile = ConstantData.androidTxtFilepath+"SummaryReport.csv";
 		File file  = new File(summaryfile);
 		try {
 			if(file.exists()){
 				//System.out.println("inside delete");
 				file.delete();
 			}
-			CsvWriter csvOutput = new CsvWriter(new FileWriter(summaryfile, true), '^');
+			CsvWriter csvOutput = new CsvWriter(new FileWriter(summaryfile, true),ConstantData.csvDelimiter);
 					
 				csvOutput.write("Task/Date");
 				for(int i=0;i<=(endDate-startDate);i++){

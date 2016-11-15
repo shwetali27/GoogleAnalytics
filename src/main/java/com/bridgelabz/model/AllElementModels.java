@@ -3,11 +3,6 @@ package com.bridgelabz.model;
 public class AllElementModels {
 	private String mGaid;
 	private String mGadiscription;
-	@Override
-	public String toString() {
-		return "AllElementModels [mGaid=" + mGaid + ", mGadiscription=" + mGadiscription + ", mAndroidId=" + mAndroidId
-				+ ", mDate=" + mDate + "]";
-	}
 	private String mAndroidId;
 	private String mDate;
 	public String getmGaid() {
@@ -35,5 +30,9 @@ public class AllElementModels {
 		this.mDate = mDate;
 	}
 	
-
+	@Override
+	public String toString() {
+		return "AllElementModels [mGaid=" + mGaid + ", mGadiscription=" + mGadiscription + ", mAndroidId=" + mAndroidId
+				+ ", mDate=" + mDate + "]";
+	}
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.bridgelabz.constants.ConstantData;
 import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.SecretFileModel;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -30,13 +32,13 @@ public class InitializeAnalyticsReporting {
 
 	
 	//setting global variable 
-	static String APPLICATION_NAME;
-	static JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-	static String KEY_FILE_LOCATION;
-	static String SERVICE_ACCOUNT_EMAIL ;
-	static String VIEW_ID ;
-	static String startDate;
-	static String endDate;
+	String APPLICATION_NAME;
+	JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+	String KEY_FILE_LOCATION;
+	String SERVICE_ACCOUNT_EMAIL ;
+	String VIEW_ID ;
+	String startDate;
+	String endDate;
 	
 	public InitializeAnalyticsReporting() {
 	}
@@ -50,19 +52,14 @@ public class InitializeAnalyticsReporting {
 		startDate=SecretFileModel.getStartDate();
 		endDate=SecretFileModel.getEndDate();
 		
+		//creating new instance for http transport for trusted certificates
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+		
+		//helper for accessing protected resources using service account flow(using .p12 file)
 		GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
 				.setServiceAccountPrivateKeyFromP12File(new File(KEY_FILE_LOCATION))
 				.setServiceAccountScopes(AnalyticsReportingScopes.all()).build();
-		
-		// getting access token
-		String refreshToken = null;
-		credential.setRefreshToken(refreshToken);
-		credential.refreshToken();
-		if (!credential.refreshToken()) {
-			throw new RuntimeException("Failed OAuth to refresh the token");
-		}
 		
 		// Construct the Analytics Reporting service object.
 		return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
@@ -128,19 +125,19 @@ public class InitializeAnalyticsReporting {
 					// Splitting the DimensionFilter
 					String[] words = dimensionfilterString.split("==");
 					// adding into dimensfilterList after setting the parameter
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("EXACT")
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorEXACT)
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("equals");
 				} else if (dimensionfilterString.contains("=@:"))
 
 				{
 					String[] words = dimensionfilterString.split("=@:");
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("PARTIAL")
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorPARTIAL)
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("at the rate");
 				} else {
 					String[] words = dimensionfilterString.split("=@");
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator("PARTIAL")
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorPARTIAL)
 							.setExpressions(Arrays.asList(words[1])));
 					//System.out.println("at the rate");
 
@@ -154,7 +151,7 @@ public class InitializeAnalyticsReporting {
 		// making ArrayList of DimensionFilterClause
 		ArrayList<DimensionFilterClause> dmfilterclauselist = new ArrayList<DimensionFilterClause>();
 		// adding dimFilters to it
-		dmfilterclauselist.add(dimensionFilterPathClause.setFilters(dimensfilterList).setOperator("AND"));
+		dmfilterclauselist.add(dimensionFilterPathClause.setFilters(dimensfilterList).setOperator(ConstantData.operatorAND));
 
 		// Creating the ReportRequest object.
 		ReportRequest request = new ReportRequest()
