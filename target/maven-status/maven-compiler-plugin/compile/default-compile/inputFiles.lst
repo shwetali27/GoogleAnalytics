@@ -1,0 +1,16 @@
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/summary/Summary.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/AllElementModels.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/responseReader/ResponseReader.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/results/Operations.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/SecretFileModel.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/ResponseModel.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/inputReader/InputJsonReader.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/GoogleAnalyticReporting/GoogleAnalyticReporting.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/responseElementReader/ResponseElementReader.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/AppOpenModel.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/responseFetcher/InitializeAnalyticsReporting.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/responseFetcher/GaReportResponseFetcher.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/results/SummaryReportCsv.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/AppReOpenModel.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/model/GaReportInputModel.java
+/home/bridgeit/StandAlone1/GoogleAnalyticReporting/src/main/java/com/bridgelabz/constants/ConstantData.java

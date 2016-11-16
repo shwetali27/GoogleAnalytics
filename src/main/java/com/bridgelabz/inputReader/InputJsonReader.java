@@ -55,10 +55,6 @@ public class InputJsonReader {
 
 				JSONObject gaReportInfoObject = (JSONObject) gaReportInfoArray.get(i);
 
-				metricArraList.clear();
-				dimensionArraList.clear();
-				dimensionFilterArraList.clear();
-
 				// setting gaid into model class
 
 				gaReportInputModelObject.setmGaID((String) gaReportInfoObject.get(ConstantData.GAID));

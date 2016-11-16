@@ -77,7 +77,7 @@ public class ResponseElementReader {
 			if (dimensionHashMapArrayList.equals(ConstantData.isNull)) {
 				AllElementModels allElementModelsObject = new AllElementModels();
 				allElementModelsObject.setmDate("");
-				allElementModelsObject.setmAndroidId(" ");
+				allElementModelsObject.setmAndroidId("");
 			}
 
 			else {
@@ -149,8 +149,8 @@ public class ResponseElementReader {
 							}
 							if (dimentionList.getKey().equals(ConstantData.dimension1)) {
 								allElementModelsObject.setmAndroidId(dimentionList.getValue());
-
 							}
+							
 						}
 
 					}
@@ -205,6 +205,7 @@ public class ResponseElementReader {
 				}
 				task.add(appOpenModelArrayListObject.get(0).getmGadiscription());
 				//calling the method for summary report creation
+				totalCount.clear();
 				totalCount = summaryObject.creatReport(appOpenModelArrayListObject, multiMapId);
 				list.add(totalCount);
 			}

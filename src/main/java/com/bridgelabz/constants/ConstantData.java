@@ -40,9 +40,11 @@ public interface ConstantData {
 	static final String date = "ga:date";
 	static final String dimension1 = "ga:dimension1";
 	static final String eventCategory = "ga:eventCategory";
+	static final String dimension8 = "ga:dimension8";
 	
 	//operators constants for dimention filters in input json
 	static final String operatorEXACT = "EXACT";
 	static final String operatorPARTIAL = "PARTIAL";
 	static final String operatorAND = "AND";
+	
 }

@@ -1,6 +1,7 @@
 package com.bridgelabz.GoogleAnalyticReporting;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 import com.bridgelabz.inputReader.InputJsonReader;
@@ -10,7 +11,7 @@ import com.bridgelabz.responseElementReader.ResponseElementReader;
 import com.bridgelabz.responseFetcher.GaReportResponseFetcher;
 
 public class GoogleAnalyticReporting {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, GeneralSecurityException{
 		String jsonfilepath = args[0];
 		
 		System.out.println("jsonFilepath:"+jsonfilepath);
@@ -25,8 +26,7 @@ public class GoogleAnalyticReporting {
 		
 		for (int i = 0; i < gaReportInputInfoArrayList.size(); i++) {
 
-			// making ArrayList of responseModel after passing one by one gaReportInputInfoArrayList
-
+			// getting ArrayList of responseModel for each gaReportInputInfoArrayList
 			responseModelObject = gaReportResponseFetcherObject
 					.getResponse(gaReportInputInfoArrayList.get(i));
 

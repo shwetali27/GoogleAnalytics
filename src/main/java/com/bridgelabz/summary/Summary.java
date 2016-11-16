@@ -18,7 +18,6 @@ public class Summary {
 	public Multimap<Integer, String> creatReport(ArrayList<AppOpenModel> appOpenModelArrayListObject,Multimap<String, String> multiMapId ){
 		System.out.println("Inside app open");
 		Multimap<Integer, String> totalCount = ArrayListMultimap.create();
-		totalCount.clear();
 		Set<String> keys = multiMapId.keySet();
 		//counting the visitors for each date and adding inside totalCount
 		for (String key : keys) {

@@ -25,48 +25,57 @@ import com.google.api.services.analyticsreporting.v4.model.GetReportsResponse;
 import com.google.api.services.analyticsreporting.v4.model.Metric;
 import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 
-public class InitializeAnalyticsReporting {
-	
+public class GAreportHandler {
+	// creating instance of Singleton class
+	private static GAreportHandler instance = new GAreportHandler();
+
 	// creating object of GaReportInputModel to get metric and dimension
 	GaReportInputModel gaReportInputModelObject = new GaReportInputModel();
 
-	
-	//setting global variable 
+	// setting global variable
 	String APPLICATION_NAME;
 	JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 	String KEY_FILE_LOCATION;
-	String SERVICE_ACCOUNT_EMAIL ;
-	String VIEW_ID ;
+	String SERVICE_ACCOUNT_EMAIL;
+	String VIEW_ID;
 	String startDate;
 	String endDate;
-	
-	public InitializeAnalyticsReporting() {
+
+	//making the constructor private so that this class cannot be instantiated
+	private GAreportHandler() {
 	}
 
+	//method to return the instance of this class
+	public static GAreportHandler getInstance() {
+		return instance;
+	}
+
+	//method for authenticating the user
 	public AnalyticsReporting initializeAnalyticsReporting() throws GeneralSecurityException, IOException {
 
+		System.out.println("Inside Service");
 		APPLICATION_NAME = SecretFileModel.getAPPLICATION_NAME();
 		KEY_FILE_LOCATION = SecretFileModel.getKEY_FILE_LOCATION();
 		SERVICE_ACCOUNT_EMAIL = SecretFileModel.getSERVICE_ACCOUNT_EMAIL();
 		VIEW_ID = SecretFileModel.VIEW_ID;
-		startDate=SecretFileModel.getStartDate();
-		endDate=SecretFileModel.getEndDate();
-		
-		//creating new instance for http transport for trusted certificates
+		startDate = SecretFileModel.getStartDate();
+		endDate = SecretFileModel.getEndDate();
+
+		// creating new instance for http transport for trusted certificates
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-		
-		//helper for accessing protected resources using service account flow(using .p12 file)
+
+		// helper for accessing protected resources using service account
+		// flow(using .p12 file)
 		GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
 				.setServiceAccountPrivateKeyFromP12File(new File(KEY_FILE_LOCATION))
 				.setServiceAccountScopes(AnalyticsReportingScopes.all()).build();
-		
+
 		// Construct the Analytics Reporting service object.
 		return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
 				.setApplicationName(APPLICATION_NAME).build();
 	}
 
-	
 	// method which give response after setting dimension metric and filter
 	public GetReportsResponse getReport(AnalyticsReporting service, GaReportInputModel gaReportInputModel)
 			throws IOException {
@@ -74,7 +83,7 @@ public class InitializeAnalyticsReporting {
 		ArrayList<String> metricArrayList = new ArrayList<String>();
 		ArrayList<String> dimensionArrayList = new ArrayList<String>();
 		ArrayList<String> dimensionFilterArrayList = new ArrayList<String>();
-		
+
 		// Creating the DateRange object.
 		DateRange dateRange = new DateRange();
 		dateRange.setStartDate(startDate);
@@ -84,7 +93,7 @@ public class InitializeAnalyticsReporting {
 		metricArrayList = gaReportInputModel.getmMetricArraList();
 		// creating object of metric ArrayList
 		ArrayList<Metric> metriclist = new ArrayList<Metric>();
-		metriclist.clear();
+
 		for (int j = 0; j < metricArrayList.size(); j++) {
 			// Creating the Metrics object.
 			Metric metric = new Metric();
@@ -97,49 +106,48 @@ public class InitializeAnalyticsReporting {
 		Dimension dimens;
 		// Creating the Dimensions ArrayList.
 		ArrayList<Dimension> dimensList = new ArrayList<Dimension>();
-		dimensList.clear();
+
 		for (int i = 0; i < dimensionArrayList.size(); i++) {
 			// Creating the Dimensions object.
 			dimens = new Dimension();
 			// adding dimension after setting name into the dimension ArrayList
 			dimensList.add(dimens.setName((String) dimensionArrayList.get(i)));
 		}
-		
-		
+
 		// getting dimenstionFilter from model class
 		dimensionFilterArrayList = gaReportInputModel.getmDimensionFilterArraList();
 		// creating object of DimensionFilter arrayList
 		ArrayList<DimensionFilter> dimensfilterList = new ArrayList<DimensionFilter>();
-		dimensfilterList.clear();
-		
+
 		if (dimensionFilterArrayList.size() >= 1) {
 			for (int k = 0; k < dimensionFilterArrayList.size(); k++) {
 				// created DimensionFilter object
 				DimensionFilter dimensionFilter = new DimensionFilter();
 				// taking DimensionFilter and converting into String
 				String dimensionfilterString = (String) dimensionFilterArrayList.get(k);
-				
-				// checking whether exact/partial operator inside DimensionFilter
-				
+
+				// checking whether exact/partial operator inside
+				// DimensionFilter
+
 				if (dimensionfilterString.contains("==")) {
 					// Splitting the DimensionFilter
 					String[] words = dimensionfilterString.split("==");
 					// adding into dimensfilterList after setting the parameter
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorEXACT)
-							.setExpressions(Arrays.asList(words[1])));
-					//System.out.println("equals");
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0])
+							.setOperator(ConstantData.operatorEXACT).setExpressions(Arrays.asList(words[1])));
+					// System.out.println("equals");
 				} else if (dimensionfilterString.contains("=@:"))
 
 				{
 					String[] words = dimensionfilterString.split("=@:");
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorPARTIAL)
-							.setExpressions(Arrays.asList(words[1])));
-					//System.out.println("at the rate");
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0])
+							.setOperator(ConstantData.operatorPARTIAL).setExpressions(Arrays.asList(words[1])));
+					// System.out.println("at the rate");
 				} else {
 					String[] words = dimensionfilterString.split("=@");
-					dimensfilterList.add(dimensionFilter.setDimensionName(words[0]).setOperator(ConstantData.operatorPARTIAL)
-							.setExpressions(Arrays.asList(words[1])));
-					//System.out.println("at the rate");
+					dimensfilterList.add(dimensionFilter.setDimensionName(words[0])
+							.setOperator(ConstantData.operatorPARTIAL).setExpressions(Arrays.asList(words[1])));
+					// System.out.println("at the rate");
 
 				}
 
@@ -151,15 +159,13 @@ public class InitializeAnalyticsReporting {
 		// making ArrayList of DimensionFilterClause
 		ArrayList<DimensionFilterClause> dmfilterclauselist = new ArrayList<DimensionFilterClause>();
 		// adding dimFilters to it
-		dmfilterclauselist.add(dimensionFilterPathClause.setFilters(dimensfilterList).setOperator(ConstantData.operatorAND));
+		dmfilterclauselist
+				.add(dimensionFilterPathClause.setFilters(dimensfilterList).setOperator(ConstantData.operatorAND));
 
 		// Creating the ReportRequest object.
-		ReportRequest request = new ReportRequest()
-				.setViewId(VIEW_ID)
-				.setDateRanges(Arrays.asList(dateRange))
-				.setMetrics(metriclist)
-				.setDimensions(dimensList);
-		
+		ReportRequest request = new ReportRequest().setViewId(VIEW_ID).setDateRanges(Arrays.asList(dateRange))
+				.setMetrics(metriclist).setDimensions(dimensList);
+
 		// if dimensionFilter is available then only set it
 		if (dimensionFilterArrayList.size() >= 1) {
 			request.setDimensionFilterClauses(dmfilterclauselist);

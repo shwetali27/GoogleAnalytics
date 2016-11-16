@@ -12,10 +12,7 @@ import com.bridgelabz.model.ResponseModel;
 
 public class ResponseReader {
 
-	// creating object ResponseModelinputTypeArrayList
-	ArrayList<ResponseModel> responseModelArrayList = new ArrayList<ResponseModel>();
-
-	public ResponseModel responseReader(String response) {
+	public static ResponseModel responseReader(String response) {
 
 		ResponseModel responseModelObject = new ResponseModel();
 		JSONParser parser = new JSONParser();
@@ -130,7 +127,6 @@ public class ResponseReader {
 						for (int l = 0; l < dimensionsarray.size(); l++) {
 							// adding into ArrayList
 							dimensionHashMap.put(columnHeaderArrayList.get(l), (String) dimensionsarray.get(l));
-
 						}
 						// adding into dimension HashMap
 						dimensionHashMapArrayList.add(dimensionHashMap);
@@ -141,7 +137,6 @@ public class ResponseReader {
 					responseModelObject.setDimensionHashMapArrayList(dimensionHashMapArrayList);
 				}
 			}
-			responseModelArrayList.add(responseModelObject);
 
 		} catch (Exception e) {
 
