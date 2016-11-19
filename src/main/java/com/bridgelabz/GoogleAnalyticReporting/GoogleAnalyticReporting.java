@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.bridgelabz.inputReader.InputJsonReader;
 import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.ResponseModel;
@@ -13,9 +15,10 @@ import com.bridgelabz.responseFetcher.GaReportResponseFetcher;
 public class GoogleAnalyticReporting {
 	public static void main(String[] args) throws IOException, GeneralSecurityException{
 		String jsonfilepath = args[0];
+		Logger logger = Logger.getLogger(GoogleAnalyticReporting.class);
+		logger.debug("log debug");
 		
-		System.out.println("jsonFilepath:"+jsonfilepath);
-		
+		logger.debug("jsonFilepath:"+jsonfilepath);
 		//reading the input json file and storing inside the list
 		InputJsonReader inputJsonReader = new InputJsonReader();
 		ArrayList<GaReportInputModel> gaReportInputInfoArrayList = inputJsonReader.readInputJsonFile(jsonfilepath);

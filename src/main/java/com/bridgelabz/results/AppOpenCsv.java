@@ -37,6 +37,7 @@ public class AppOpenCsv {
 				csvOutput.endRecord();
 			}
 			
+			csvOutput.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
