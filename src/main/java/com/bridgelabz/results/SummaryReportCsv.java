@@ -19,7 +19,7 @@ public class SummaryReportCsv {
 	//method for creating csv file
 	public void csvCreation(ArrayList<String> task,ArrayList<Multimap<Integer, String>> list) {
 
-		String summaryfile = ConstantData.androidTxtFilepath+"SummaryReport.csv";
+		String summaryfile = ConstantData.resultsFilepath+"SummaryReport.csv";
 		File file  = new File(summaryfile);
 		try {
 			if(file.exists()){

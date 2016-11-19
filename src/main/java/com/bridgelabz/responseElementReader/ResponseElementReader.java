@@ -15,6 +15,8 @@ import com.bridgelabz.model.AppReOpenModel;
 import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.ResponseModel;
 import com.bridgelabz.model.SecretFileModel;
+import com.bridgelabz.results.AppOpenCsv;
+import com.bridgelabz.results.AppReopenCsv;
 import com.bridgelabz.results.Operations;
 import com.bridgelabz.results.SummaryReportCsv;
 import com.bridgelabz.summary.Summary;
@@ -168,6 +170,9 @@ public class ResponseElementReader {
 			/*----------------------getting data for app Open and putting inside map--------------------*/
 			if (gaReportInputModel.getmGaID().equals(ConstantData.one)) {
 
+				//creating csv file for app open
+				AppOpenCsv appOpenCsv = new AppOpenCsv();
+				appOpenCsv.createReport(appOpenModelArrayListObject);
 				for (int i = 0; i < appOpenModelArrayListObject.size(); i++) {
 					// System.out.println(SecretFileModel.startDate.replace("-",""));
 					// taking the id for first day app open
@@ -213,6 +218,10 @@ public class ResponseElementReader {
 			/*----------------------getting data for app Reopen and putting inside map--------------------*/
 			if (gaReportInputModel.getmGaID().equals(ConstantData.two)) {
 
+				//creating csv for app reopen
+				AppReopenCsv appReopenCsv = new AppReopenCsv();
+				appReopenCsv.createReport(appReOpenModelArrayListObject);
+				
 				for (int i = 0; i < appReOpenModelArrayListObject.size(); i++) {
 					Set<String> keys = multiMapId.keySet();
 					// System.out.println(keys.size());

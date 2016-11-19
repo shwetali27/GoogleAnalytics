@@ -29,9 +29,6 @@ public class GAreportHandler {
 	// creating instance of Singleton class
 	private static GAreportHandler instance = new GAreportHandler();
 
-	// creating object of GaReportInputModel to get metric and dimension
-	GaReportInputModel gaReportInputModelObject = new GaReportInputModel();
-
 	// setting global variable
 	String APPLICATION_NAME;
 	JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
@@ -53,7 +50,7 @@ public class GAreportHandler {
 	//method for authenticating the user
 	public AnalyticsReporting initializeAnalyticsReporting() throws GeneralSecurityException, IOException {
 
-		System.out.println("Inside Service");
+		System.out.println("Authenticating user");
 		APPLICATION_NAME = SecretFileModel.getAPPLICATION_NAME();
 		KEY_FILE_LOCATION = SecretFileModel.getKEY_FILE_LOCATION();
 		SERVICE_ACCOUNT_EMAIL = SecretFileModel.getSERVICE_ACCOUNT_EMAIL();

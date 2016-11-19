@@ -12,11 +12,13 @@ import com.google.common.collect.Multimap;
 public class Summary {
 	SummaryReportCsv summaryReportCsvObject = new SummaryReportCsv();
 	
+	//getting start date and end date in integer format
 	int startDate = Integer.parseInt(SecretFileModel.startDate.replace("-", ""));
 	int endDate = Integer.parseInt(SecretFileModel.endDate.replace("-", ""));
 	
+	//csv creation for app open 
 	public Multimap<Integer, String> creatReport(ArrayList<AppOpenModel> appOpenModelArrayListObject,Multimap<String, String> multiMapId ){
-		System.out.println("Inside app open");
+		
 		Multimap<Integer, String> totalCount = ArrayListMultimap.create();
 		Set<String> keys = multiMapId.keySet();
 		//counting the visitors for each date and adding inside totalCount

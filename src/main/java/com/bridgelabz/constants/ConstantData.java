@@ -7,7 +7,7 @@ public interface ConstantData {
 	static final String isNull = "null";
 	static final char csvDelimiter = '^';
 	//file path for android id operations
-	static final String androidTxtFilepath = "/home/bridgeit/Music/AndroidId/";
+	static final String resultsFilepath = "/home/bridgeit/Music/Results/";
 	
 	//constants for input json file
 	static final String startDate = "startDate";

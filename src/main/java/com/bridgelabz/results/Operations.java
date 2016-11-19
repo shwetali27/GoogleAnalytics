@@ -15,14 +15,11 @@ public class Operations {
 
 	SecretFileModel secretFileModel = new SecretFileModel();
 
-	public Operations() {
-	}
-
 	public void fileCreation(Multimap<String, String> multiMapId, Multimap<String, String> multiMapEvent,
 			Multimap<String, Collection<String>> multiMapvalue) throws IOException {
 
 		// String filePath = SecretFileModel.getCsvFilePath();
-		String filePath = ConstantData.androidTxtFilepath;
+		String filePath = ConstantData.resultsFilepath;
 		
 		File file = new File(filePath + "AndroidOperations.txt");
 		if (file.exists())
