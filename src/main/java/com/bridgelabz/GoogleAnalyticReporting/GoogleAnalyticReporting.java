@@ -16,6 +16,7 @@ public class GoogleAnalyticReporting {
 	public static void main(String[] args) throws IOException, GeneralSecurityException{
 		String jsonfilepath = args[0];
 		Logger logger = Logger.getLogger(GoogleAnalyticReporting.class);
+		logger.info("This is log4j file");
 		logger.debug("log debug");
 		
 		logger.debug("jsonFilepath:"+jsonfilepath);
