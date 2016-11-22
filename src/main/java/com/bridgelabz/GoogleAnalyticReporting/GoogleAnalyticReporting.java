@@ -11,6 +11,7 @@ import com.bridgelabz.model.GaReportInputModel;
 import com.bridgelabz.model.ResponseModel;
 import com.bridgelabz.responseElementReader.ResponseElementReader;
 import com.bridgelabz.responseFetcher.GaReportResponseFetcher;
+import com.bridgelabz.results.SummaryReportCsv;
 
 public class GoogleAnalyticReporting {
 	public static void main(String[] args) throws IOException, GeneralSecurityException{
@@ -24,6 +25,8 @@ public class GoogleAnalyticReporting {
 		InputJsonReader inputJsonReader = new InputJsonReader();
 		ArrayList<GaReportInputModel> gaReportInputInfoArrayList = inputJsonReader.readInputJsonFile(jsonfilepath);
 	
+		SummaryReportCsv summaryReportCsv = new SummaryReportCsv();
+		summaryReportCsv.initialize();
 		ResponseModel responseModelObject = new ResponseModel();
 		GaReportResponseFetcher gaReportResponseFetcherObject = new GaReportResponseFetcher(); 
 		ResponseElementReader elementReader = new ResponseElementReader();
