@@ -2,11 +2,13 @@ package com.bridgelabz.summary;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.bridgelabz.model.AllElementModels;
 import com.bridgelabz.model.AppOpenModel;
 import com.bridgelabz.model.SecretFileModel;
+import com.bridgelabz.model.SummaryReportModel;
 import com.bridgelabz.results.SummaryReportCsv;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -17,7 +19,8 @@ public class Summary {
 	int endDate = Integer.parseInt(SecretFileModel.endDate.replace("-", ""));
 
 	SummaryReportCsv summuryReportCsv = new SummaryReportCsv();
-	// csv creation for app open
+
+	// csv creation for app open for first day
 	public Multimap<Integer, String> creatReport(ArrayList<AppOpenModel> appOpenModelArrayListObject,
 			Multimap<String, String> multiMapId) {
 
@@ -43,8 +46,10 @@ public class Summary {
 		return totalCount;
 	}
 
-	public void createSummary(String task, Multimap<String, String> multiMapId,
+	// method for creating summary report for all task for first day users
+	public SummaryReportModel createSummary(String task, Multimap<String, String> multiMapId,
 			ArrayList<AllElementModels> allElementModelArrayListObject) throws IOException {
+		SummaryReportModel summaryReportModelObject = new SummaryReportModel();
 
 		Multimap<String, String> reportCount = ArrayListMultimap.create();
 
@@ -52,6 +57,8 @@ public class Summary {
 		for (String key : keys) {
 			for (int j = 0; j < allElementModelArrayListObject.size(); j++) {
 				// System.out.println(task.get(i));
+				// if particular task and key matches the condition then only
+				// put the value inside hash map
 				if (allElementModelArrayListObject.get(j).getmGadiscription().equals(task)) {
 					if (allElementModelArrayListObject.get(j).getmAndroidId().equals(key)) {
 						// System.out.println(key);
@@ -64,12 +71,19 @@ public class Summary {
 			}
 		}
 
-		/*System.out.println(task);
+		List<Integer> dates = new ArrayList<Integer>();
+		List<Integer> totalCount = new ArrayList<Integer>();
+		// System.out.println(task);
 		for (int k = 0; k <= (endDate - startDate); k++) {
-		System.out.println(reportCount.get(Integer.toString(startDate+k)).size());
+			dates.add(k,startDate+k);
+			totalCount.add(k, reportCount.get(Integer.toString(startDate+k)).size());
+			// System.out.println(reportCount.get(Integer.toString(startDate+k)).size());
 		}
-		System.out.println("**********************************");
-		*/
+		summaryReportModelObject.setDates(dates);
+		summaryReportModelObject.setTotalCount(totalCount);
+		summaryReportModelObject.setmGaDiscription(task);
 		summuryReportCsv.createReport(task, reportCount);
+
+		return summaryReportModelObject;
 	}
 }

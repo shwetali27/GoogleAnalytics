@@ -1,6 +1,7 @@
 package com.bridgelabz.GoogleAnalyticReporting;
 
 import java.io.IOException;
+import java.net.ResponseCache;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
@@ -42,6 +43,8 @@ public class GoogleAnalyticReporting {
 					gaReportInputInfoArrayList.get(i),gaReportInputInfoArrayList.size());
 
 		}
+		
+		System.out.println(ResponseElementReader.summaryReportModellist.size());
 		System.out.println("Finished");
 	}
 }
